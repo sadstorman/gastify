@@ -1,5 +1,4 @@
-import React, { Suspense, useEffect } from 'react'
-import { Spinner } from 'react-bootstrap';
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, HashRouter as Router, Routes } from 'react-router-dom';
 import { startCheking } from '../actions/auth';
