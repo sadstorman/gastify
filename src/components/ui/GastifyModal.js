@@ -1,4 +1,6 @@
-import {  DateTimePicker, LocalizationProvider } from '@mui/lab'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { LocalizationProvider } from '@mui/lab';
 import { TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +11,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment'
 import Swal from 'sweetalert2';
 import { tradeStartUpdate } from '../../actions/trades';
+import { isMobile } from 'react-device-detect';
 
 export const GastifyModal = () => {
 
@@ -36,7 +39,7 @@ export const GastifyModal = () => {
             setFormValues(initialForm)
         }
     }, [activeTrade, setFormValues])
-    
+
     const handleInputchange = ({ target }) => {
         setFormValues({
             ...formValues,
@@ -104,14 +107,25 @@ export const GastifyModal = () => {
                                     <Form.Control className='form-control text-center' autoComplete='off' type="number" placeholder="Amount$" name="monto" value={monto} onChange={handleInputchange} />
 
                                     <LocalizationProvider dateAdapter={AdapterMoment}>
-                                        <DateTimePicker
-                                            views={['day']}
-                                            name="fecha"
-                                            value={fecha}
-                                            showTodayButton={true}
-                                            onChange={handleStartDateChange}
-                                            renderInput={props => <TextField {...props} value={fecha} inputProps={{readOnly:true}} variant="filled" className="calendario text-center thisnot text-white" />}
-                                        />
+                                        {isMobile
+                                            ? <MobileDatePicker
+                                                views={['day']}
+                                                name="fecha"
+                                                value={fecha}
+                                                type="datetime-local"
+                                                showTodayButton={true}
+                                                onChange={handleStartDateChange}
+                                                renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
+                                            />
+                                            : <DesktopDatePicker
+                                                views={['day']}
+                                                name="fecha"
+                                                value={fecha}
+                                                type="datetime-local"
+                                                showTodayButton={true}
+                                                onChange={handleStartDateChange}
+                                                renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
+                                            />}
                                     </LocalizationProvider>
                                 </Col>
                             </Form.Group>

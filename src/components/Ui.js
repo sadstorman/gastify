@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { startLogOut } from '../actions/auth'
 import { tradeLogOut } from '../actions/trades'
 
@@ -26,16 +26,16 @@ export const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <div className="navbar-nav text-center">
-                            <Link
-                                className="navbar-brand hidden-xs mx-1"
+                            <NavLink
+                                className={`${(( isActive ) => isActive ? 'nav-active' : '')} nav-item nav-link hidden-xs mx-1`}
                                 to="/"
                             >
                                 Home
-                            </Link>
+                            </NavLink>
 
                             <NavLink
-                                activeclassname="active"
-                                className="nav-item nav-link"
+                                
+                                className={` ${(( isActive ) => isActive ? 'nav-active' : '')} nav-item nav-link`}
                                 exact
                                 to="/contacto"
                             >
