@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "./static/css/main.84be3e42.css",
-    "main.js": "./static/js/main.b988a146.js",
+    "main.js": "./static/js/main.ccf03d32.js",
     "static/media/zwartevilt.png": "./static/media/zwartevilt.dc2b82d9db240fd99943.png",
     "index.html": "./index.html",
     "main.84be3e42.css.map": "./static/css/main.84be3e42.css.map",
-    "main.b988a146.js.map": "./static/js/main.b988a146.js.map"
+    "main.ccf03d32.js.map": "./static/js/main.ccf03d32.js.map"
   },
   "entrypoints": [
     "static/css/main.84be3e42.css",
-    "static/js/main.b988a146.js"
+    "static/js/main.ccf03d32.js"
   ]
 }

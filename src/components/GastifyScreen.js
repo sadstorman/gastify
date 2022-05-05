@@ -7,12 +7,13 @@ import moment from 'moment'
 import { uiCloseModal } from '../actions/ui'
 import { tradeStartAddNew, tradeStartUpdate } from '../actions/trades'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import {  DateTimePicker, LocalizationProvider } from '@mui/lab'
+import { DateTimePicker, DesktopDatePicker, LocalizationProvider, MobileDatePicker } from '@mui/lab'
 import { TextField } from '@mui/material';
 import { DeleteEventFab } from './ui/DeleteEventFab'
 import Swal from 'sweetalert2'
 import { GastifyModal } from './ui/GastifyModal'
 import { Button, Col, Form, Row } from 'react-bootstrap'
+import { isMobile } from 'react-device-detect'
 
 export const GastifyScreen = () => {
   let valor;
@@ -85,7 +86,7 @@ export const GastifyScreen = () => {
     }
     dispatch(uiCloseModal())
     setFormValues(initialForm)
-    
+
   }
 
   useEffect(() => {
@@ -105,7 +106,7 @@ export const GastifyScreen = () => {
   };
 
   return (
-    <div  className='container'>
+    <div className='container'>
 
       <h1 className='text-center text-white'> GASTIFY </h1>
 
@@ -147,18 +148,27 @@ export const GastifyScreen = () => {
           </Row>
           <Row className='align-items-center justify-content-center mt-2'>
             <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DateTimePicker
-                views={['day']}
-                name="fecha"
-                value={fecha}
-                showTodayButton={true}
-                onChange={handleStartDateChange}
-                renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
-              />
+              {(isMobile)
+                ? <MobileDatePicker
+                  views={['day']}
+                  name="fecha"
+                  value={fecha}
+                  showTodayButton={true}
+                  onChange={handleStartDateChange}
+                  renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
+                />
+                : <DesktopDatePicker views={['day']}
+                  name="fecha"
+                  value={fecha}
+                  showTodayButton={true}
+                  onChange={handleStartDateChange}
+                  renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
+                />}
+
             </LocalizationProvider>
           </Row>
           <Row className='align-items-center justify-content-center mt-2'>
-          <Button variant='danger' className='button_cancel w-25' onClick={ cancelSubmit }>
+            <Button variant='danger' className='button_cancel w-25' onClick={cancelSubmit}>
               Cancel
             </Button>
             <Button type="submit" className='button_submit w-25' onClick={handleSubmit}>
