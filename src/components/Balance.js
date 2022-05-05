@@ -19,7 +19,7 @@ export const Balance = ({ total = 0 }) => {
                             </div>
                         </div>
                         <div className="col-12 col-md-6 smalll">
-                            <small className="text-white">Last 10 moves balance</small>
+                            <small className="text-white">Last  moves balance</small>
                         </div>
                     </div>
 

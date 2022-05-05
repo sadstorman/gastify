@@ -29,7 +29,7 @@ export const LoginScreen = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    dispatch(startLogin(correoLogin, passwordLogin))
+    dispatch(startLogin(correoLogin.toLowerCase(), passwordLogin.toLowerCase()))
   }
 
   const handleRegister = (e) => {
@@ -38,7 +38,7 @@ export const LoginScreen = () => {
     if (passwordRegister !== passwordRegister2) {
       return Swal.fire('Error', 'Las contraseñas deben ser iguales', 'error')
     } else {
-      dispatch(startRegister(correoRegister, passwordRegister, nombreRegister))
+      dispatch(startRegister(correoRegister.toLowerCase(), passwordRegister.toLowerCase(), nombreRegister.toLowerCase()))
     }
   }
 
@@ -50,12 +50,14 @@ export const LoginScreen = () => {
           <form onSubmit={handleLogin} className="">
             <div className="input-group mb-3">
               <input
+                
                 name="correoLogin"
                 value={correoLogin}
                 onChange={handleInputChange}
                 type="text"
                 className="form-control"
                 placeholder="Email"
+                
               />
             </div>
             <div className="input-group mt-3">

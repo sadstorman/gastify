@@ -7,7 +7,7 @@ import moment from 'moment'
 import { uiCloseModal } from '../actions/ui'
 import { tradeStartAddNew, tradeStartUpdate } from '../actions/trades'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DatePicker, LocalizationProvider } from '@mui/lab'
+import {  DateTimePicker, LocalizationProvider } from '@mui/lab'
 import { TextField } from '@mui/material';
 import { DeleteEventFab } from './ui/DeleteEventFab'
 import Swal from 'sweetalert2'
@@ -147,11 +147,11 @@ export const GastifyScreen = () => {
           </Row>
           <Row className='align-items-center justify-content-center mt-2'>
             <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DatePicker
+              <DateTimePicker
                 views={['day']}
                 name="fecha"
                 value={fecha}
-
+                showTodayButton={true}
                 onChange={handleStartDateChange}
                 renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
               />

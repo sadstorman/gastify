@@ -11,7 +11,7 @@ export const Tooltip = () => {
             <button className='btn  button-tooltip btn-sm' ref={target} onClick={() => setShow(!show)}>
                 <i className="bi bi-question-lg"></i>
             </button>
-            <Overlay target={target.current} show={show} transition={true} placement="right" rootCloseEvent='click' rootClose={true}>
+            <Overlay target={target.current} show={show} transition={true} placement="top" rootCloseEvent='click' rootClose={true}>
                 {({ placement, arrowProps, show: _show, popper, ...props }) => (
                     <div
                         {...props}
@@ -19,7 +19,7 @@ export const Tooltip = () => {
                             position: 'absolute',
                             backgroundColor: '#00295a',
                             padding: '4px 10px',
-                            marginLeft: '4px',
+                            marginBottom: '6px',
                             color: 'white',
                             borderRadius: 4,
                             ...props.style,
