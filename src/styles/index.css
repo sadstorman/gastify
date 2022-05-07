@@ -61,7 +61,41 @@ form {
   box-shadow: none !important;
 
 }
+.react-datetime-picker{
+  cursor: pointer;
+}
+.react-calendar{
+  border: 0px solid var(--azul-marino-oscuro) !important;
+  background-color: var(--background-color) !important;
+  position: absolute;
+  top: -180px;
+}
+.react-datetime-picker input:focus{
+  outline: none;
+}
 
+.react-datetime-picker__wrapper{
+  border: 0px solid gray !important;
+}
+.height{
+  background-color: white;
+  border-radius: 6px;
+  height: 60px;
+  
+}
+.react-datetime-picker__inputGroup{
+  font-size: 12px;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.react-datetime-picker__button{
+  margin-right: 4px;
+}
+label{
+  color: black;
+  font-weight: 700;
+}
 input {
   background: #f1f1f1;
   color: black !important;

@@ -1,17 +1,14 @@
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { LocalizationProvider } from '@mui/lab';
-import { TextField } from '@mui/material'
+import 'react-datetime-picker/dist/DateTimePicker.css'
+import 'react-calendar/dist/Calendar.css'
+import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle'
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Container, Form, Modal, Row } from 'react-bootstrap';
 import { uiCloseModalUpdate } from '../../actions/ui';
 import { useDispatch, useSelector } from 'react-redux';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from 'moment'
 import Swal from 'sweetalert2';
 import { tradeStartUpdate } from '../../actions/trades';
-import { isMobile } from 'react-device-detect';
 
 export const GastifyModal = () => {
 
@@ -49,9 +46,14 @@ export const GastifyModal = () => {
     const handleClose = () => {
         dispatch(uiCloseModalUpdate())
     }
+    const word = '-'
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if (fecha === null ) {
+            Swal.fire('Error', 'Complete todos los campos', 'error')
+            return setValid(false)
+          }
         if (tipo === '') {
             Swal.fire('Error', 'Complete todos los campos', 'error')
             return setValid(false)
@@ -67,17 +69,16 @@ export const GastifyModal = () => {
         setFormValues(initialForm)
     }
     const handleStartDateChange = (e) => {
-        const { _d } = e
-        setFecha(_d);
+        setFecha(e);
         setFormValues({
             ...formValues,
-            fecha: e.toDate()
+            fecha: e
         })
     };
 
     return (
 
-        <Modal className='text-center' show={modalOpenUpdate} onHide={handleClose} size="sm"
+        <Modal className='' show={modalOpenUpdate} onHide={handleClose} size="sm"
             aria-labelledby="contained-modal-title-vcenter"
             centered>
             <Modal.Header className='blue' closeButton>
@@ -89,6 +90,7 @@ export const GastifyModal = () => {
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className=''>
                                 <Col xs={12} >
+                                <label>Type</label>
                                     <Form.Select className=" form-select text-center" name="tipo" value={tipo} onChange={handleInputchange} aria-label="Default select example">
                                         <option className='text-black' defaultValue="Food">Food</option>
                                         <option className='text-black' value="Entertainment">Entertainment</option>
@@ -97,36 +99,29 @@ export const GastifyModal = () => {
                                         <option className='text-black' value="Salary">Salary</option>
                                         <option className='text-black' value="Other">Other</option>
                                     </Form.Select>
+                                    <label>Move <small className='text-danger'>- not editable</small></label>
                                     <Form.Select className=" form-select text-center bg-grey" disabled={true} name="ingresoegreso" value={ingresoegreso} onChange={handleInputchange} aria-label="Default select example">
                                         <option className='text-black' defaultValue="Egress">Egress</option>
                                         <option className='text-black' value="Entry">Entry</option>
                                     </Form.Select>
                                 </Col>
                                 <Col xs={12}>
+                                    <label>Concept</label>
                                     <Form.Control className='form-control text-center' autoComplete='off' type="text" placeholder="Concept" name="concepto" value={concepto} onChange={handleInputchange} />
+                                    <label>Amount</label>
                                     <Form.Control className='form-control text-center' autoComplete='off' type="number" placeholder="Amount$" name="monto" value={monto} onChange={handleInputchange} />
-
-                                    <LocalizationProvider dateAdapter={AdapterMoment}>
-                                        {isMobile
-                                            ? <MobileDatePicker
-                                                views={['day']}
-                                                name="fecha"
-                                                value={fecha}
-                                                type="datetime-local"
-                                                showTodayButton={true}
-                                                onChange={handleStartDateChange}
-                                                renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
-                                            />
-                                            : <DesktopDatePicker
-                                                views={['day']}
-                                                name="fecha"
-                                                value={fecha}
-                                                type="datetime-local"
-                                                showTodayButton={true}
-                                                onChange={handleStartDateChange}
-                                                renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
-                                            />}
-                                    </LocalizationProvider>
+                                    <label >Date</label>
+                                    <DateTimePicker
+                                        className="form-control height text-center"
+                                        value={fecha}
+                                        name="fecha"
+                                        calendarIcon={false}
+                                        onChange={handleStartDateChange}
+                                        dateFormat="DD-MM-YYYY"
+                                        closeOnSelect={true}
+                                        closeOnClickOutside={true}
+                                        disableClock={true}                           
+                                    />
                                 </Col>
                             </Form.Group>
 

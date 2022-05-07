@@ -54,7 +54,7 @@ export const LoginScreen = () => {
                 name="correoLogin"
                 value={correoLogin}
                 onChange={handleInputChange}
-                type="text"
+                type="email"
                 className="form-control"
                 placeholder="Email"
                 

@@ -6,16 +6,15 @@ import { AddNewFab } from './ui/AddNewFab'
 import moment from 'moment'
 import { uiCloseModal } from '../actions/ui'
 import { tradeStartAddNew, tradeStartUpdate } from '../actions/trades'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import { LocalizationProvider } from '@mui/lab';
-import { TextField } from '@mui/material';
 import { DeleteEventFab } from './ui/DeleteEventFab'
 import Swal from 'sweetalert2'
 import { GastifyModal } from './ui/GastifyModal'
 import { Button, Col, Form, Row } from 'react-bootstrap'
-import { isMobile } from 'react-device-detect'
+import 'react-datetime-picker/dist/DateTimePicker.css'
+import 'react-calendar/dist/Calendar.css'
+import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle'
+
+const now = moment().minutes(0).seconds(0)
 
 export const GastifyScreen = () => {
   let valor;
@@ -25,7 +24,6 @@ export const GastifyScreen = () => {
   const { modalOpen, modalOpenUpdate } = useSelector(state => state.ui)
   const { activeTrade, trades } = useSelector(state => state.trades)
   const [valid, setValid] = useState(false)
-  let now = moment()
   const [fecha, setFecha] = useState(now.toDate());
   const suma = trades.filter(suma => suma.ingresoegreso === 'Entry')
   const resta = trades.filter(suma => suma.ingresoegreso === 'Egress')
@@ -40,6 +38,7 @@ export const GastifyScreen = () => {
   }, 0)
 
   total = valor - valor2
+
 
   const initialForm = {
     concepto: '',
@@ -70,6 +69,10 @@ export const GastifyScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (fecha === null ) {
+      Swal.fire('Error', 'Complete todos los campos', 'error')
+      return setValid(false)
+    }
     if (tipo === '') {
       Swal.fire('Error', 'Complete todos los campos', 'error')
       return setValid(false)
@@ -99,11 +102,10 @@ export const GastifyScreen = () => {
     }
   }, [activeTrade, setFormValues])
   const handleStartDateChange = (e) => {
-    const { _d } = e
-    setFecha(_d);
+    setFecha(e);
     setFormValues({
       ...formValues,
-      fecha: e.toDate()
+      fecha: e
     })
   };
 
@@ -149,28 +151,16 @@ export const GastifyScreen = () => {
 
           </Row>
           <Row className='align-items-center justify-content-center mt-2'>
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              {isMobile
-                ? <MobileDatePicker
-                  views={['day']}
-                  name="fecha"
-                  value={fecha}
-                  type="datetime-local"
-                  showTodayButton={true}
-                  onChange={handleStartDateChange}
-                  renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
-                />
-                : <DesktopDatePicker
-                  views={['day']}
-                  name="fecha"
-                  value={fecha}
-                  type="datetime-local"
-                  showTodayButton={true}
-                  onChange={handleStartDateChange}
-                  renderInput={props => <TextField {...props} value={fecha} inputProps={{ readOnly: true }} variant="filled" className="w-50 calendario text-center thisnot text-white" />}
-                />}
-
-            </LocalizationProvider>
+            <DateTimePicker
+              className="form-control w-50 text-center"
+              value={fecha}
+              name="fecha"
+              onChange={handleStartDateChange}
+              dateFormat="DD-MM-YYYY"
+              closeOnSelect={true}
+              closeOnClickOutside={true}
+              disableClock={true}
+            />
           </Row>
           <Row className='align-items-center justify-content-center mt-2'>
             <Button variant='danger' className='button_cancel w-25' onClick={cancelSubmit}>
